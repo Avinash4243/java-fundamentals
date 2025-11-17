@@ -6,6 +6,7 @@ import java.util.List;
 public class MethodReferenceDemo {
     public static void main(String[] args) {
         List<String> nameList = Arrays.asList("Avinash", "Atul", "Krishna");
+        //method reference
         nameList.forEach(System.out::println);
         //constructor reference
         nameList.stream().map(GreetPerson::new).toList();
