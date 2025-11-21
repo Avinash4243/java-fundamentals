@@ -82,7 +82,15 @@ public class IntermidiateAndTerminalStreamDemo {
                 new Employee(103, "Saurav"),
                 new Employee(101, "Avinash"));
         System.out.println(
-                employeeList.stream().collect(Collectors.groupingBy(emp -> emp.id(), Collectors.mapping(em -> em.name(), Collectors.toSet()))));
+                employeeList.stream().collect(Collectors.groupingBy(Employee::id, Collectors.mapping(Employee::name, Collectors.toSet()))));
+
+        // 14. Count occurrences of each character in a string
+        var word = "banana";
+        System.out.println(Arrays.stream(word.split("")).toList().stream().collect(Collectors.groupingBy(x->x, Collectors.counting())));
+
+        // 15. Flatten a list of lists
+        var nestedArray = List.of(List.of(1,2), List.of(3,4), List.of(5));
+        System.out.println(nestedArray.stream().flatMap(Collection::stream).toList());
 
     }
 
