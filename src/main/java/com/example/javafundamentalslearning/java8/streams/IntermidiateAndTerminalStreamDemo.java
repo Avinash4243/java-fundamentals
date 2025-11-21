@@ -1,9 +1,7 @@
 package com.example.javafundamentalslearning.java8.streams;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -69,11 +67,35 @@ public class IntermidiateAndTerminalStreamDemo {
 
         // 11. Group anagrams (Collect similar words)
         List<String> list4 = Arrays.asList("CAT", "ACT", "TCS", "SCT", "AB", "BA", "CA");
-        Map<Integer, List<String>> collect = list4.stream().collect(Collectors.groupingBy(String::length));
-//        collect.entrySet().stream().filter(x -> x.)
-        System.out.println("Collect = "+ collect);
+        list4.stream().collect(Collectors.groupingBy(
+                IntermidiateAndTerminalStreamDemo::sameASCIIValue)).values().stream().map(
+                        x -> String.join(", ", x)).forEach(System.out::println);
+
+        // 12. Find the second highest number
+        List<Integer> list5 = Arrays.asList(10, 5, 8, 20, 20);
+        System.out.println(new HashSet<>(list5).stream().sorted((a, b)-> b-a).toList().get(1)); //10
+
+        // 13. Convert list of employees to map
+        List<Employee> employeeList = Arrays.asList(
+                new Employee(101, "Avinash"),
+                new Employee(102, "Abhi"),
+                new Employee(103, "Saurav"),
+                new Employee(101, "Avinash"));
+        System.out.println(
+                employeeList.stream().collect(Collectors.groupingBy(emp -> emp.id(), Collectors.mapping(em -> em.name(), Collectors.toSet()))));
 
     }
+
+    private static int sameASCIIValue(String word){
+        var sum = 0;
+        for (int i = 0; i < word.length(); i++) {
+            sum += word.charAt(i);
+        }
+        return sum;
+    }
+}
+
+record Employee(int id, String name){
 }
 
 record Person (String name, int age){
